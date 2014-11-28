@@ -2,12 +2,10 @@ from browsers import WFBrowser
 
 
 def main():
-    browser = WFBrowser()
-    browser.visit('http://wellsfargo.com')
+    with WFBrowser() as browser:
+        browser.visit('http://wellsfargo.com')
 
-    #browser.login('foo', 'bar')
-
-    browser.quit()
+        #browser.login('foo', 'bar')
 
 
 if __name__ == "__main__":
