@@ -1,11 +1,14 @@
-from splinter import Browser
+from browsers import WFBrowser
 
 
 def main():
-    browser = Browser()
+    browser = WFBrowser()
     browser.visit('http://wellsfargo.com')
 
+    #browser.login('foo', 'bar')
+
     browser.quit()
+
 
 if __name__ == "__main__":
     main()
