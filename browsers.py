@@ -20,8 +20,8 @@ class WFBrowser(FirefoxWebDriver):
         self.fill('userid', username)
         self.fill('password', password)
 
-        btnSignon = self.find_by_id('btnSignon')
-        btnSignon.click()
+        buttonSignon = self.find_by_id('btnSignon')
+        buttonSignon.click()
 
     def find_account_links(self):
         return self.find_by_css('a.account')
@@ -34,3 +34,11 @@ class WFBrowser(FirefoxWebDriver):
         self.nav_home()
         self.click_link_by_text('Account Activity')
         self.click_link_by_text('Download Activity')
+
+    def download_selected_account(self):
+        # must be on download page
+        
+        self.choose('fileFormat', 'quickenOfx')
+
+        buttonDownload = self.find_by_id('buttonPrimary').find_by_tag('input')
+        buttonDownload.click()
