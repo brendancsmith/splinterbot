@@ -19,7 +19,7 @@ def main():
 
     # create a driver for Wells Fargo
     with WFBrowser() as browser:
-        browser.visit('http://wellsfargo.com')
+        browser.visit(browser.url)
         browser.login(username, password)
 
         browser.nav_to_download_page()
