@@ -26,6 +26,11 @@ class WFBrowser(FirefoxWebDriver):
     def find_account_links(self):
         return self.find_by_css('a.account')
 
+    def nav_home(self):
+        self.visit('https://online.wellsfargo.com/das/cgi-bin/session.cgi'
+                   '?screenid=SIGNON_PORTAL_PAUSE')
+
     def nav_to_download_page(self):
+        self.nav_home()
         self.click_link_by_text('Account Activity')
         self.click_link_by_text('Download Activity')
