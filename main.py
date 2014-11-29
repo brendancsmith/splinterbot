@@ -22,6 +22,8 @@ def main():
         browser.visit('http://wellsfargo.com')
         browser.login(username, password)
 
+        browser.nav_to_download_page()
+
         # Just for demo/debugging.
         import time
         time.sleep(5)

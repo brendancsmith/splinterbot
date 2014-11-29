@@ -20,3 +20,10 @@ class WFBrowser(FirefoxWebDriver):
 
         btnSignon = self.find_by_id('btnSignon')
         btnSignon.click()
+
+    def find_account_links(self):
+        return self.find_by_css('a.account')
+
+    def nav_to_download_page(self):
+        self.click_link_by_text('Account Activity')
+        self.click_link_by_text('Download Activity')
