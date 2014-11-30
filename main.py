@@ -23,7 +23,7 @@ def main():
         browser.login(username, password)
 
         browser.nav_to_download_page()
-        browser.download_selected_account()
+        browser.download_all_accounts()
 
         # Just for demo/debugging.
         import time

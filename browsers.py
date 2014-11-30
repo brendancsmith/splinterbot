@@ -67,6 +67,29 @@ class WFBrowser(Browser):
         self.driver.click_link_by_text('Account Activity')
         self.driver.click_link_by_text('Download Activity')
 
+    @staticmethod
+    def _get_select_options(selectEl):
+        optionEls = selectEl.find_by_tag('option')
+        optionValues = [el.value for el in optionEls]
+
+        return optionValues
+
+    def download_all_accounts(self):
+        # must be on download page
+
+        # the page refreshes when you select a different account,
+        # so we have to find the select element each time
+        accountPickerId = 'primaryKey'
+
+        accountPicker = self.driver.find_by_id(accountPickerId)
+        accountOptions = self._get_select_options(accountPicker)
+
+        # go through the options on the account drop-down and download them
+        for option in accountOptions:
+            self.driver.select(accountPickerId, option)
+            self.driver.find_by_name('Select').click()
+            self.download_selected_account()
+
     def download_selected_account(self):
         # must be on download page
 
