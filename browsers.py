@@ -17,6 +17,8 @@ class Browser(object):
     actions. General driver methods will fall through to be accessible
     by the browser interface."""
 
+    _fallThrough = ['quit']
+
     def __init__(self):
         self._wrap_driver()
 
@@ -30,7 +32,7 @@ class Browser(object):
         self.driver = FirefoxWebDriver()
 
         # add instance methods that fall through to the driver
-        for methodName in ['quit']:
+        for methodName in self._fallThrough:
             def wrapped_method(self):
                 return self.driver.__getattribute__(methodName)()
 
