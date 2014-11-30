@@ -56,9 +56,14 @@ class WFBrowser(Browser):
         buttonSignon.click()
 
     def find_account_links(self):
+        """Return a list of links to each account on the home page."""
+        # must be on home page
         return self.driver.find_by_css('a.account')
 
     def nav_home(self):
+        """Navigate to the login page if we're not on the domain, and
+        the member portal if we are on the domain."""
+
         if not self.domain in self.driver.url:
             self.driver.visit('http://' + self.domain)
         else:
@@ -67,11 +72,15 @@ class WFBrowser(Browser):
                               '?screenid=SIGNON_PORTAL_PAUSE')
 
     def nav_to_download_page(self):
+        """Navigate to the page wherein you can select account activity
+        exports."""
+
         self.nav_home()
         self.driver.click_link_by_text('Account Activity')
         self.driver.click_link_by_text('Download Activity')
 
     def download_all_accounts(self):
+        """Select each available account and download a quicken export"""
         # must be on download page
 
         # the page refreshes when you select a different account,
@@ -88,6 +97,7 @@ class WFBrowser(Browser):
             self.download_selected_account()
 
     def download_selected_account(self):
+        """Download a quicken export for the selected account."""
         # must be on download page
 
         self.driver.choose('fileFormat', 'quickenOfx')
