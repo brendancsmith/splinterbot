@@ -4,7 +4,7 @@
 import types
 
 # intra-project modules
-# N/A
+import driver_utils
 
 # external libraries
 from splinter.driver.webdriver.firefox import WebDriver as FirefoxWebDriver
@@ -67,13 +67,6 @@ class WFBrowser(Browser):
         self.driver.click_link_by_text('Account Activity')
         self.driver.click_link_by_text('Download Activity')
 
-    @staticmethod
-    def _get_select_options(selectEl):
-        optionEls = selectEl.find_by_tag('option')
-        optionValues = [el.value for el in optionEls]
-
-        return optionValues
-
     def download_all_accounts(self):
         # must be on download page
 
@@ -82,7 +75,7 @@ class WFBrowser(Browser):
         accountPickerId = 'primaryKey'
 
         accountPicker = self.driver.find_by_id(accountPickerId)
-        accountOptions = self._get_select_options(accountPicker)
+        accountOptions = driver_utils.option_values_of_select(accountPicker)
 
         # go through the options on the account drop-down and download them
         for option in accountOptions:
