@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
 
+# zip up the python files in src
 cd src
 zip -r ../WFTransactionGrabber *.py
 cd ..
 
+# add a shebang to the archive, output without the zip extension
 echo '#!/usr/bin/env python' | cat - WFTransactionGrabber.zip > WFTransactionGrabber
+
+# make the archive executable
 chmod +x WFtransactionGrabber
+
+# remove the original zip
 rm WFTransactionGrabber.zip
