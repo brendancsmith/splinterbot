@@ -12,12 +12,10 @@ from splinter.driver.webdriver.firefox import WebDriver as FirefoxWebDriver
 #-----------------------------------------------------------------------
 
 
-class WFBrowser(object):
-    """A wrapper for a Splinter web driver, used for specific
-    Wells Fargo actions. Ideally, some general driver methods should
-    fall through to be accessible by the browser interface."""
-
-    domain = 'wellsfargo.com'
+class Browser(object):
+    """A base wrapper for a Splinter web driver, used for page-specific
+    actions. General driver methods will fall through to be accessible
+    by the browser interface."""
 
     def __init__(self):
         self._wrap_driver()
@@ -37,6 +35,12 @@ class WFBrowser(object):
                 return self.driver.__getattribute__(methodName)()
 
             self.__dict__[methodName] = types.MethodType(wrapped_method, self)
+
+
+class WFBrowser(Browser):
+    """A Splinter web driver wrapper for Wells Fargo."""
+
+    domain = 'wellsfargo.com'
 
     def login(self, username, password):
         self.driver.fill('userid', username)
