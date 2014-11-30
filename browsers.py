@@ -1,7 +1,7 @@
 #------------------------------ imports --------------------------------
 
 # standard modules
-# N/A
+import types
 
 # intra-project modules
 # N/A
@@ -20,13 +20,23 @@ class WFBrowser(object):
     domain = 'wellsfargo.com'
 
     def __init__(self):
-        self.driver = FirefoxWebDriver()
+        self._wrap_driver()
 
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.driver.__exit__(exc_type, exc_value, traceback)
+
+    def _wrap_driver(self):
+        self.driver = FirefoxWebDriver()
+
+        # add instance methods that fall through to the driver
+        for methodName in ['quit']:
+            def wrapped_method(self):
+                return self.driver.__getattribute__(methodName)()
+
+            self.__dict__[methodName] = types.MethodType(wrapped_method, self)
 
     def login(self, username, password):
         self.driver.fill('userid', username)
