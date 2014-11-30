@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+zip -r WFTransactionGrabber *.py
+echo '#!/usr/bin/env python' | cat - WFTransactionGrabber.zip > WFTransactionGrabber
+chmod +x WFtransactionGrabber
+rm WFTransactionGrabber.zip
