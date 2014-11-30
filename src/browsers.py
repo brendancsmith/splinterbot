@@ -1,6 +1,7 @@
 #------------------------------ imports --------------------------------
 
 # standard modules
+import time
 import types
 
 # intra-project modules
@@ -37,6 +38,9 @@ class Browser(object):
                 return self.driver.__getattribute__(methodName)()
 
             self.__dict__[methodName] = types.MethodType(wrapped_method, self)
+
+    def wait(self, sec=5):
+        time.sleep(sec)
 
 
 class WFBrowser(Browser):

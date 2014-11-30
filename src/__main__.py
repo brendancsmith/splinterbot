@@ -25,9 +25,7 @@ def main():
         browser.nav_to_download_page()
         browser.download_all_accounts()
 
-        # Just for demo/debugging.
-        import time
-        time.sleep(5)
+        browser.wait()
 
 
 if __name__ == "__main__":
