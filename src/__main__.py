@@ -12,7 +12,7 @@ from browsers import WFBrowser
 #-----------------------------------------------------------------------
 
 
-def main():
+def wells_fargo():
     """Downloads all account exports with the input account info."""
 
     # get login details from terminal
@@ -32,6 +32,10 @@ def main():
 
         # give some extra time in case Firefox makes download alerts
         browser.wait()
+
+
+def main():
+    wells_fargo()
 
 
 if __name__ == "__main__":
