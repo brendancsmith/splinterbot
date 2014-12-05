@@ -15,13 +15,13 @@ This project requires [pip](https://pypi.python.org/pypi/pip) for dependency man
     pip install -r requirements.txt
     ```
 
-1.  Build the project executables using Pants. The `.pex` executables will be created in the `dist/` directory.
+1.  Build the bot executables using Pants. The `.pex` executables will be created in the `dist/` directory.
 
     ```{bash}
-    pants :
+    pants src/bots:
     ```
 
-Alternatively, running `./build_all` build with Pants and create simple executables in the `bin/` directory.
+Alternatively, running `./build_bots` build with Pants and create simple executables in the `bin/` directory.
 
 
 Other Information

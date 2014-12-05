@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-pants :
+pants src/bots:
 
 # Copy pex's to bin/ and remove extension
 mkdir -p bin/

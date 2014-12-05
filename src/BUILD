@@ -1,6 +1,10 @@
 python_library(
     name = 'browsers',
-    sources = ['browsers.py']
+    sources = ['browsers.py'],
+    dependencies = [
+        'src:driver_utils',
+        '//:splinter'
+    ]
 )
 
 python_library(
