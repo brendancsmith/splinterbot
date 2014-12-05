@@ -1,15 +1,28 @@
 WFTransactionGrabber
 =================
 
-A web driver to download account activity .qfx files from Wells Fargo (for YNAB). Written in Python using [Splinter](http://splinter.cobrateam.info/).
+A web driver to download account activity .qfx files from Wells Fargo (for YNAB). Written in Python using [Splinter](http://splinter.cobrateam.info/) and built using Twitter's [Pants](https://pantsbuild.github.io/).
+
 
 Build Instructions
 ------------------
 
-#### Dependencies
-This project uses Pants to build executable binaries. In addition, there are a number of python libraries that are used in the source, most notably Splinter.
+This project requires [pip](https://pypi.python.org/pypi/pip) for dependency management. [virtualenv](http://virtualenv.readthedocs.org/en/latest/) is also recommended. These are very common python development tools.
 
-It is recommended that virtualenv and pip be used to manage these dependencies. While in a virtualenv, running `./build_targets` will install all needed dependencies using pip, and build the project binaries in `bin/`.
+1. Install Pants etc. using pip.
+
+```{bash}
+pip install -r requirements.txt
+```
+
+2. Build the project executables using Pants. The `.pex` executables will be created in the `dist/` directory.
+
+```{bash}
+pants :
+```
+
+Alternatively, running `./build_all` build with Pants and create simple executables in the `bin/` directory.
+
 
 Other Information
 -----------------

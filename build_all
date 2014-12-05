@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
-
-pip install -r requirements.txt
-
 pants :
 
 # Copy pex's to bin/ and remove extension
