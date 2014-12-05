@@ -9,17 +9,17 @@ Build Instructions
 
 This project requires [pip](https://pypi.python.org/pypi/pip) for dependency management. [virtualenv](http://virtualenv.readthedocs.org/en/latest/) is also recommended. These are very common python development tools.
 
-1. Install Pants etc. using pip.
+1.  Install Pants etc. using pip.
 
-```{bash}
-pip install -r requirements.txt
-```
+    ```{bash}
+    pip install -r requirements.txt
+    ```
 
-2. Build the project executables using Pants. The `.pex` executables will be created in the `dist/` directory.
+1.  Build the project executables using Pants. The `.pex` executables will be created in the `dist/` directory.
 
-```{bash}
-pants :
-```
+    ```{bash}
+    pants :
+    ```
 
 Alternatively, running `./build_all` build with Pants and create simple executables in the `bin/` directory.
 
