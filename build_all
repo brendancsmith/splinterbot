@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+pants :
+
+# Copy pex's to bin/ and remove extension
+mkdir -p bin/
+
+for file in dist/*.pex
+do
+    filename="${file/dist/}"
+    cp "$file" "bin/${filename/.pex/}"
+done
