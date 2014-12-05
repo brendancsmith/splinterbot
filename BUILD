@@ -1,4 +1,4 @@
 python_binary(
   name = 'WFTransactionGrabber',
-  source = 'WFTransactionGrabber.py'
+  source = 'src/WFTransactionGrabber.py'
 )
