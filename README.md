@@ -1,7 +1,12 @@
-WFTransactionGrabber
-=================
+Splinterbot
+===========
 
-A web driver to download account activity .qfx files from Wells Fargo (for YNAB). Written in Python using [Splinter](http://splinter.cobrateam.info/) and built using Twitter's [Pants](https://pantsbuild.github.io/).
+Splinterbot is a web automation tool written in Python and built on top of [Splinter](http://splinter.cobrateam.info/). A number of bots for different automation tasks are included in this repository, and executables for them are built using Twitter's [Pants](https://pantsbuild.github.io/).
+
+Bots
+----
+
+__WFTransactionGrabber:__ Download account activity .qfx files from Wells Fargo (for YNAB).
 
 
 Build Instructions
@@ -15,13 +20,13 @@ This project requires [pip](https://pypi.python.org/pypi/pip) for dependency man
     pip install -r requirements.txt
     ```
 
-1.  Build the project executables using Pants. The `.pex` executables will be created in the `dist/` directory.
+1.  Build the bot executables using Pants. The `.pex` executables will be created in the `dist/` directory.
 
     ```{bash}
-    pants :
+    pants src/bots:
     ```
 
-Alternatively, running `./build_all` build with Pants and create simple executables in the `bin/` directory.
+Alternatively, running `./build_bots` build with Pants and create simple executables in the `bin/` directory.
 
 
 Other Information
