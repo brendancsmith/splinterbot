@@ -128,8 +128,8 @@ class MyREDBrowser(Browser):
         enrollmentMenu = self.driver.find_by_id('menu-item-1-1')
         enrollmentMenu.mouse_over()
 
-        self.wait(3)
-
-        # click the Edit Enrollment menu option
+        # click the Enrollment Planner menu option
         buttonEnrollmentPlanner = self.driver.find_by_id('menu-item-1-3-1')
+        while not buttonEnrollmentPlanner.visible:
+            self.wait(1)
         buttonEnrollmentPlanner.click()
