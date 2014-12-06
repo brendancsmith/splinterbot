@@ -123,7 +123,7 @@ class MyREDBrowser(Browser):
     def nav_home(self):
         self.driver.visit('http://' + self.domain)
 
-    def nav_to_enrollment_planner(self):
+    def nav_to_shopping_cart(self):
         # open the enrollment navbar element
         enrollmentMenu = self.driver.find_by_id('menu-item-1-1')
         enrollmentMenu.mouse_over()
@@ -133,3 +133,7 @@ class MyREDBrowser(Browser):
         while not buttonEnrollmentPlanner.visible:
             self.wait(1)
         buttonEnrollmentPlanner.click()
+
+        with self.driver.get_iframe('TargetContent') as panel:
+            # click the shopping cart tab in the enrollment panel
+            panel.click_link_by_text('shopping cart')
