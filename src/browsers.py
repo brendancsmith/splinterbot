@@ -105,3 +105,31 @@ class WFBrowser(Browser):
         buttonDownload = self.driver.find_by_id('buttonPrimary') \
                                     .find_by_tag('input')
         buttonDownload.click()
+
+
+class MyREDBrowser(Browser):
+    """A Splinter web driver wrapper for UNL MyRED."""
+
+    domain = 'myred.unl.edu'
+
+    def login(self, username, password):
+        self.driver.fill('userid', username)
+        self.driver.fill('pwd', password)
+
+        buttonLogIn = self.driver.find_by_css('.submit') \
+                                 .find_by_tag('input')
+        buttonLogIn.click()
+
+    def nav_home(self):
+        self.driver.visit('http://' + self.domain)
+
+    def nav_to_edit_enrollment(self):
+        # open the enrollment navbar element
+        enrollmentMenu = self.driver.find_by_id('menu-item-1-1')
+        enrollmentMenu.mouse_over()
+
+        self.wait(3)
+
+        # click the Edit Enrollment menu option
+        buttonEditEnrollment = self.driver.find_by_id('menu-item-1-1-1')
+        buttonEditEnrollment.click()

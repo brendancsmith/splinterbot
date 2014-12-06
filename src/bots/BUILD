@@ -14,3 +14,11 @@ python_binary(
         'src/bots:bots-lib'
     ]
 )
+
+python_binary(
+    name = 'SpanishEnrollmentChecker',
+    source = 'SpanishEnrollmentChecker.py',
+    dependencies = [
+        'src/bots:bots-lib'
+    ]
+)
