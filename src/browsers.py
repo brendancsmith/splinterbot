@@ -123,7 +123,7 @@ class MyREDBrowser(Browser):
     def nav_home(self):
         self.driver.visit('http://' + self.domain)
 
-    def nav_to_edit_enrollment(self):
+    def nav_to_enrollment_planner(self):
         # open the enrollment navbar element
         enrollmentMenu = self.driver.find_by_id('menu-item-1-1')
         enrollmentMenu.mouse_over()
@@ -131,5 +131,5 @@ class MyREDBrowser(Browser):
         self.wait(3)
 
         # click the Edit Enrollment menu option
-        buttonEditEnrollment = self.driver.find_by_id('menu-item-1-1-1')
-        buttonEditEnrollment.click()
+        buttonEnrollmentPlanner = self.driver.find_by_id('menu-item-1-3-1')
+        buttonEnrollmentPlanner.click()

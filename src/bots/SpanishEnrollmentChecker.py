@@ -26,7 +26,7 @@ def main():
         browser.nav_home()
         browser.login(username, password)
 
-        browser.nav_to_edit_enrollment()
+        browser.nav_to_enrollment_planner()
 
         # pause for a few seconds
         browser.wait(20)
