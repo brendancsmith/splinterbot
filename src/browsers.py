@@ -20,8 +20,15 @@ class Browser(object):
 
     _fallThrough = ['quit']
 
-    def __init__(self):
-        self._wrap_driver()
+    def __init__(self, driver=None):
+        if driver is None:
+            # Setting FirefoxWebDriver() as a default value for driver
+            # causes Firefox to open before user/pass are collected.
+            # Not sure why, but we'll just do that here.
+            driver = FirefoxWebDriver()
+
+        self.driver = driver
+        self._wrap_driver(driver)
 
     def __enter__(self):
         return self
@@ -29,9 +36,7 @@ class Browser(object):
     def __exit__(self, exc_type, exc_value, traceback):
         self.driver.__exit__(exc_type, exc_value, traceback)
 
-    def _wrap_driver(self):
-        self.driver = FirefoxWebDriver()
-
+    def _wrap_driver(self, driver):
         # add instance methods that fall through to the driver
         for methodName in self._fallThrough:
             def wrapped_method(self):
