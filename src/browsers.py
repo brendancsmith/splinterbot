@@ -48,6 +48,17 @@ class Browser(object):
         time.sleep(sec)
 
 
+class FrameBrowser(Browser):
+
+    def __init__(self, driver, frameName):
+        super(FrameBrowser, self).__init__(driver)
+
+        self.driver.driver.switch_to.frame(frameName)
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.driver.driver.switch_to.frame(None)
+
+
 class WFBrowser(Browser):
     """A Splinter web driver wrapper for Wells Fargo."""
 
@@ -128,7 +139,7 @@ class MyREDBrowser(Browser):
     def nav_home(self):
         self.driver.visit('http://' + self.domain)
 
-    def nav_to_shopping_cart(self):
+    def nav_to_enrollment_planner(self):
         # open the enrollment navbar element
         enrollmentMenu = self.driver.find_by_id('menu-item-1-1')
         enrollmentMenu.mouse_over()
@@ -139,6 +150,12 @@ class MyREDBrowser(Browser):
             self.wait(1)
         buttonEnrollmentPlanner.click()
 
-        with self.driver.get_iframe('TargetContent') as panel:
-            # click the shopping cart tab in the enrollment panel
-            panel.click_link_by_text('shopping cart')
+    def get_panel_browser(self):
+        return MyREDPanelBrowser(self.driver, 'TargetContent')
+
+
+class MyREDPanelBrowser(FrameBrowser):
+
+    def nav_to_shopping_cart(self):
+        # click the shopping cart tab in the enrollment panel
+        self.driver.click_link_by_text('shopping cart')

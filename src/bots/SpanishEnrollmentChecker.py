@@ -26,7 +26,10 @@ def main():
         browser.nav_home()
         browser.login(username, password)
 
-        browser.nav_to_shopping_cart()
+        browser.nav_to_enrollment_planner()
+
+        with browser.get_panel_browser() as panelBrowser:
+            panelBrowser.nav_to_shopping_cart()
 
         # pause for a few seconds
         browser.wait(20)
