@@ -28,6 +28,7 @@ class Browser(object):
             driver = FirefoxWebDriver()
 
         self.driver = driver
+        self._extend_driver(driver)  # must be before wrap
         self._wrap_driver(driver)
 
     def __enter__(self):
@@ -35,6 +36,13 @@ class Browser(object):
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.driver.__exit__(exc_type, exc_value, traceback)
+
+    @staticmethod
+    def _extend_driver(driver):
+        def find_by_text(self, text):
+            return self.find_by_xpath("//*[text()='%s']" % text)
+
+        driver.find_by_text = types.MethodType(find_by_text, driver)
 
     def _wrap_driver(self, driver):
         # add instance methods that fall through to the driver
