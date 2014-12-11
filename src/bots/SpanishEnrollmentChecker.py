@@ -31,9 +31,9 @@ def main():
         with browser.get_panel_browser() as panelBrowser:
             panelBrowser.nav_to_shopping_cart()
             panelBrowser.choose_spring_semester()
-            print(panelBrowser.check_class_status())
+            status = panelBrowser.check_class_status()
 
-    
+            print('SPAN 201 is: {0}'.format(status))
 
 
 if __name__ == "__main__":
