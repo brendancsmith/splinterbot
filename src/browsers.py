@@ -167,3 +167,18 @@ class MyREDPanelBrowser(FrameBrowser):
     def nav_to_shopping_cart(self):
         # click the shopping cart tab in the enrollment panel
         self.driver.click_link_by_text('shopping cart')
+
+    def choose_spring_semester(self):
+        # id = 'SSR_DUMMY_RECV1$sels$1$$0'
+        springRadioButton = self.driver.find_by_id('SSR_DUMMY_RECV1$sels$1$$0')
+        springRadioButton.check()
+
+        continueButton = self.driver.find_by_id('DERIVED_SSS_SCT_SSR_PB_GO')
+        continueButton.click()
+
+    def check_class_status(self):
+        statusIcon = self.driver.find_by_id(
+            'win1divDERIVED_REGFRM1_SSR_STATUS_LONG$0')
+        
+        status = statusIcon.find_by_tag('img')['alt']
+        return status

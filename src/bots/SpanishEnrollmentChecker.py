@@ -30,9 +30,10 @@ def main():
 
         with browser.get_panel_browser() as panelBrowser:
             panelBrowser.nav_to_shopping_cart()
+            panelBrowser.choose_spring_semester()
+            print(panelBrowser.check_class_status())
 
-        # pause for a few seconds
-        browser.wait(20)
+    
 
 
 if __name__ == "__main__":
