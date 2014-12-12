@@ -15,3 +15,12 @@ python_binary(
     ],
     compatibility = ['>=2.7','<3']
 )
+
+python_binary(
+    name = 'SpanishEnrollmentChecker',
+    source = 'SpanishEnrollmentChecker.py',
+    dependencies = [
+        'src/bots:bots-lib'
+    ],
+    compatibility = ['>=2.7','<3']
+)
