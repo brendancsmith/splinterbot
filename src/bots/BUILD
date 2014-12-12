@@ -21,5 +21,6 @@ python_binary(
     source = 'SpanishEnrollmentChecker.py',
     dependencies = [
         'src/bots:bots-lib'
-    ]
+    ],
+    compatibility = ['>=2.7','<3']
 )
