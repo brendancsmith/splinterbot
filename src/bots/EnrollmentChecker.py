@@ -13,7 +13,8 @@ from browsers import MyREDBrowser
 
 
 def main():
-    """Checks MyRED to see if SPAN202-001 is open."""
+    """Checks MyRED to see if classes in the shopping cart for next
+    semester are open or closed."""
 
     # get login details from terminal
     username = raw_input('NUID: ')
