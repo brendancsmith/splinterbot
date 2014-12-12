@@ -176,9 +176,30 @@ class MyREDPanelBrowser(FrameBrowser):
         continueButton = self.driver.find_by_id('DERIVED_SSS_SCT_SSR_PB_GO')
         continueButton.click()
 
-    def check_class_status(self):
-        statusIcon = self.driver.find_by_id(
-            'win1divDERIVED_REGFRM1_SSR_STATUS_LONG$0')
-        
-        status = statusIcon.find_by_tag('img')['alt']
-        return status
+    def parse_shopping_cart(self):
+        # must be on shopping cart tab
+
+        cartTable = self.driver.find_by_id('SSR_REGFORM_VW$scroll$0').first
+
+        # filter rows that aren't classes
+        def isRowAClass(row):
+            return 'trSSR_REGFORM_VW$0' in row['id']
+        cartClasses = [row for row in cartTable.find_by_tag('tr')
+                       if isRowAClass(row)]
+
+        classes = []
+        for i, cartClass in enumerate(cartClasses):
+
+            # grab the name of the class
+            nameId = 'win1divP_CLASS_NAME${0}'.format(i)
+            className = cartClass.find_by_id(nameId).first.text
+            className = className.replace('\n', ' ')
+
+            # grab the open/closed status of the class
+            statusId = 'win1divDERIVED_REGFRM1_SSR_STATUS_LONG${0}'.format(i)
+            classStatus = cartClass.find_by_id(statusId)\
+                                   .find_by_tag('img')['alt']
+
+            classes.append((className, classStatus))
+
+        return classes
