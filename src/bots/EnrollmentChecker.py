@@ -30,7 +30,7 @@ def main():
 
         with browser.get_panel_browser() as panelBrowser:
             panelBrowser.nav_to_shopping_cart()
-            panelBrowser.choose_spring_semester()
+            panelBrowser.choose_semester(1)
 
             cart = panelBrowser.parse_shopping_cart()
 

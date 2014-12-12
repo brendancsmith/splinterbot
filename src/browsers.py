@@ -168,10 +168,16 @@ class MyREDPanelBrowser(FrameBrowser):
         # click the shopping cart tab in the enrollment panel
         self.driver.click_link_by_text('shopping cart')
 
-    def choose_spring_semester(self):
+    def choose_semester(self, index):
+        '''Choose a semester for the shopping cart and click Continue.
+        The first semester in the list, which should be the current
+        semeseter, will have an index of 0.'''
+
+        semesterRadioId = 'SSR_DUMMY_RECV1$sels${0}$$0'.format(index)
+
         # id = 'SSR_DUMMY_RECV1$sels$1$$0'
-        springRadioButton = self.driver.find_by_id('SSR_DUMMY_RECV1$sels$1$$0')
-        springRadioButton.check()
+        semesterRadio = self.driver.find_by_id(semesterRadioId)
+        semesterRadio.check()
 
         continueButton = self.driver.find_by_id('DERIVED_SSS_SCT_SSR_PB_GO')
         continueButton.click()
