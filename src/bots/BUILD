@@ -17,8 +17,8 @@ python_binary(
 )
 
 python_binary(
-    name = 'SpanishEnrollmentChecker',
-    source = 'SpanishEnrollmentChecker.py',
+    name = 'EnrollmentChecker',
+    source = 'EnrollmentChecker.py',
     dependencies = [
         'src/bots:bots-lib'
     ],
