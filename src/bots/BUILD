@@ -12,7 +12,8 @@ python_binary(
     source = 'WFTransactionGrabber.py',
     dependencies = [
         'src/bots:bots-lib'
-    ]
+    ],
+    compatibility = ['>=2.7','<3']
 )
 
 python_binary(
