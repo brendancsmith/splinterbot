@@ -13,7 +13,8 @@ from browsers import MyREDBrowser
 
 
 def main():
-    """Checks MyRED to see if SPAN202-001 is open."""
+    """Checks MyRED to see if classes in the shopping cart for next
+    semester are open or closed."""
 
     # get login details from terminal
     username = raw_input('NUID: ')
@@ -30,10 +31,13 @@ def main():
 
         with browser.get_panel_browser() as panelBrowser:
             panelBrowser.nav_to_shopping_cart()
-            panelBrowser.choose_spring_semester()
-            status = panelBrowser.check_class_status()
+            panelBrowser.choose_semester(1)
 
-            print('SPAN 201 is: {0}'.format(status))
+            cart = panelBrowser.parse_shopping_cart()
+
+            printBuffer = ['{0}: {1}'.format(cartClass[0], cartClass[1])
+                           for cartClass in cart]
+            print('\n'.join(printBuffer))
 
 
 if __name__ == "__main__":
