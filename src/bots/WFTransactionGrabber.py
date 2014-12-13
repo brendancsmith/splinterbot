@@ -5,6 +5,7 @@ from getpass import getpass
 
 # intra-project modules
 from browsers import WFBrowser
+import utils
 
 # external libraries
 # N/A
@@ -31,7 +32,7 @@ def wells_fargo():
         browser.download_all_accounts()
 
         # give some extra time in case Firefox makes download alerts
-        browser.wait()
+        utils.wait()
 
 
 def main():

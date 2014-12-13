@@ -2,7 +2,7 @@ python_library(
   name = 'bots-lib',
   dependencies = [
     'src:browsers',
-    'src:driver_utils',
+    'src:utils',
     '//:splinter'
   ]
 )

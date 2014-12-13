@@ -1,11 +1,10 @@
 #------------------------------ imports --------------------------------
 
 # standard modules
-import time
 import types
 
 # intra-project modules
-import driver_utils
+import utils
 
 # external libraries
 from splinter.driver.webdriver.firefox import WebDriver as FirefoxWebDriver
@@ -51,9 +50,6 @@ class Browser(object):
                 return self.driver.__getattribute__(methodName)()
 
             self.__dict__[methodName] = types.MethodType(wrapped_method, self)
-
-    def wait(self, sec=5):
-        time.sleep(sec)
 
 
 class FrameBrowser(Browser):
@@ -112,7 +108,7 @@ class WFBrowser(Browser):
         accountPickerId = 'primaryKey'
 
         accountPicker = self.driver.find_by_id(accountPickerId)
-        accountOptions = driver_utils.option_values_of_select(accountPicker)
+        accountOptions = self.option_values_of_select(accountPicker)
 
         # go through the options on the account drop-down and download them
         for option in accountOptions:
@@ -129,6 +125,16 @@ class WFBrowser(Browser):
         buttonDownload = self.driver.find_by_id('buttonPrimary') \
                                     .find_by_tag('input')
         buttonDownload.click()
+
+    @staticmethod
+    def option_values_of_select(selectEl):
+        """Retrieves the value attributes of the option nodes within a
+        select tag"""
+
+        optionEls = selectEl.find_by_tag('option')
+        optionValues = [el.value for el in optionEls]
+
+        return optionValues
 
 
 class MyREDBrowser(Browser):
@@ -155,7 +161,7 @@ class MyREDBrowser(Browser):
         # click the Enrollment Planner menu option
         buttonEnrollmentPlanner = self.driver.find_by_id('menu-item-1-3-1')
         while not buttonEnrollmentPlanner.visible:
-            self.wait(1)
+            utils.wait(1)
         buttonEnrollmentPlanner.click()
 
     def get_panel_browser(self):
