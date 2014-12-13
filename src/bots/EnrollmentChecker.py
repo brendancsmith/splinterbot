@@ -5,6 +5,7 @@ from getpass import getpass
 
 # intra-project modules
 from browsers import MyREDBrowser
+import utils
 
 # external libraries
 # N/A
@@ -20,6 +21,12 @@ def main():
     username = raw_input('NUID: ')
     password = getpass('MyRED Password: ')
 
+    while True:
+        check_enrollment_availability(username, password)
+        utils.wait(60 * 5)
+
+
+def check_enrollment_availability(username, password):
     # create a driver for Wells Fargo
     with MyREDBrowser() as browser:
 
