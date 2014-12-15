@@ -6,6 +6,7 @@ from getpass import getpass
 # intra-project modules
 from browsers import MyREDBrowser
 import utils
+from gmail import Gmail
 
 # external libraries
 # N/A
@@ -18,15 +19,34 @@ def main():
     semester are open or closed."""
 
     # get login details from terminal
-    username = raw_input('NUID: ')
-    password = getpass('MyRED Password: ')
+    print('MyRED Login:')
+    print('============')
+    myredUsername = raw_input('NUID: ')
+    myredPassword = getpass('Password: ')
+
+    print('Gmail Login:')
+    print('============')
+    gmailAddr = raw_input('Email address: ')
+    gmailPassword = getpass('Password: ')
 
     while True:
-        check_enrollment_availability(username, password)
+        cart = check_shopping_cart(myredUsername, myredPassword)
+
+        print('----')
+        printBuffer = ['{0}: {1}'.format(cartClass[0], cartClass[1])
+                       for cartClass in cart]
+        print('\n'.join(printBuffer))
+        print('----')
+
+        for course in cart:
+            if course[1] != 'Closed':
+                send_email(gmailAddr, gmailPassword,
+                           '{0}: {1}'.format(course[0], course[1]))
+
         utils.wait(60 * 5)
 
 
-def check_enrollment_availability(username, password):
+def check_shopping_cart(username, password):
     # create a driver for Wells Fargo
     with MyREDBrowser() as browser:
 
@@ -42,10 +62,12 @@ def check_enrollment_availability(username, password):
 
             cart = panelBrowser.parse_shopping_cart()
 
-            printBuffer = ['{0}: {1}'.format(cartClass[0], cartClass[1])
-                           for cartClass in cart]
-            print('\n'.join(printBuffer))
+            return cart
 
+
+def send_email(gmailAddr, gmailPassword, msg):
+    with Gmail(gmailAddr, gmailPassword) as gmail:
+        gmail.sendmail(gmailAddr, [gmailAddr], msg)
 
 if __name__ == "__main__":
     main()
