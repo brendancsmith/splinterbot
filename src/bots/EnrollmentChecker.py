@@ -19,31 +19,39 @@ def main():
     semester are open or closed."""
 
     # get login details from terminal
-    print('MyRED Login:')
-    print('============')
-    myredUsername = raw_input('NUID: ')
-    myredPassword = getpass('Password: ')
-
-    print('Gmail Login:')
-    print('============')
-    gmailAddr = raw_input('Email address: ')
-    gmailPassword = getpass('Password: ')
+    myredUsername, myredPassword = ask_login_details('MyRED Login', 'NUID')
+    gmailAddr, gmailPassword = ask_login_details('Gmail Login', 'Email address')
 
     while True:
         cart = check_shopping_cart(myredUsername, myredPassword)
 
-        print('----')
-        printBuffer = ['{0}: {1}'.format(cartClass[0], cartClass[1])
-                       for cartClass in cart]
-        print('\n'.join(printBuffer))
-        print('----')
+        print_cart(cart)
+        utils.wait(60 * 5)
 
-        for course in cart:
+
+def ask_login_details(loginTitle='Login:',
+                      usernameLabel='Username:', passwordLabel='Password:'):
+    print(loginTitle)
+    print('=' * len(loginTitle))
+    username = raw_input(usernameLabel + ':')
+    password = getpass(passwordLabel + ':')
+
+    return username, password
+
+
+def print_cart(cart):
+    print('----')
+    printBuffer = ['{0}: {1}'.format(cartClass[0], cartClass[1])
+                   for cartClass in cart]
+    print('\n'.join(printBuffer))
+    print('----')
+
+
+def notify_of_status(cart, gmailAddr, gmailPassword):
+    for course in cart:
             if course[1] != 'Closed':
                 send_email(gmailAddr, gmailPassword,
                            '{0}: {1}'.format(course[0], course[1]))
-
-        utils.wait(60 * 5)
 
 
 def check_shopping_cart(username, password):
