@@ -19,8 +19,11 @@ def main():
     semester are open or closed."""
 
     # get login details from terminal
-    myredUsername, myredPassword = ask_login_details('MyRED Login', 'NUID')
-    gmailAddr, gmailPassword = ask_login_details('Gmail Login', 'Email address')
+    myredUsername, myredPassword = ask_login_details('MyRED Login',
+                                                     'NUID')
+    gmailAddr, gmailPassword = ask_login_details('Gmail Login',
+                                                 'Email address')
+
 
     while True:
         cart = check_shopping_cart(myredUsername, myredPassword)
@@ -30,11 +33,11 @@ def main():
 
 
 def ask_login_details(loginTitle='Login:',
-                      usernameLabel='Username:', passwordLabel='Password:'):
+                      usernameLabel='Username', passwordLabel='Password'):
     print(loginTitle)
     print('=' * len(loginTitle))
-    username = raw_input(usernameLabel + ':')
-    password = getpass(passwordLabel + ':')
+    username = raw_input(usernameLabel + ': ')
+    password = getpass(passwordLabel + ': ')
 
     return username, password
 
@@ -74,8 +77,8 @@ def check_shopping_cart(username, password):
 
 
 def send_email(gmailAddr, gmailPassword, msg):
-    with Gmail(gmailAddr, gmailPassword) as gmail:
-        gmail.sendmail(gmailAddr, [gmailAddr], msg)
+    with Gmail(gmailAddr, gmailPassword) as server:
+        server.sendmail(gmailAddr, [gmailAddr], msg)
 
 if __name__ == "__main__":
     main()
