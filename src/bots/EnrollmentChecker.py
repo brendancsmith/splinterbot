@@ -6,6 +6,7 @@
 # intra-project modules
 from gmail import send_email
 from splinterbot.bot import Bot, LoginManager
+from splinterbot.plugins import Gmail as GmailPlugin
 from sites.myred import MyRedBrowser
 
 # external libraries
@@ -26,8 +27,11 @@ class EnrollmentChecker(Bot):
         # get login details from terminal
         self.logins['myred'] = LoginManager.ask('NUID',
                                                 'MyRED Password')
+
+        # set up gmail for notifications
         self.logins['gmail'] = LoginManager.ask('Gmail Address',
                                                 'Gmail Password')
+        self.attach_plugin(GmailPlugin(*self.logins['gmail']))
 
         # Send a non-error email to verify it's working
         #send_email(gmailAddr, gmailPassword,
@@ -41,23 +45,31 @@ class EnrollmentChecker(Bot):
                 cart = self.check_shopping_cart()
                 self.print_cart(cart)
 
+                raise ElementDoesNotExist('debug')
+
             # handle exceptions
             except ElementDoesNotExist as e:
                 strikes += 1
                 if strikes >= 3:
                     self.handle_exception(e)
+                    exit()
             except Exception as e:
                 self.handle_exception(e)
+                exit()
             else:
                 strikes = 0
 
             # wait until the next run
-            self.wait(5 * 60)
+            self.wait(10)
 
     def handle_exception(self, e):
-        print(e)
+        import traceback
+        tb = traceback.format_exc()
+        
+        print(tb)
+
         (address, password) = self.logins['gmail']
-        send_email(address, password, str(e))
+        send_email(address, password, tb)
 
     @staticmethod
     def print_cart(cart):

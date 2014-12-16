@@ -21,7 +21,8 @@ class PluginReceiver(object):
     plugins = {}
 
     def attach_plugin(self, plugin):
-        if self.plugins[plugin.name]:
+        if (plugin.name in self.plugins) and \
+           (self.plugins[plugin.name] is not None):
             raise PluginError('Plugin {0} is already loaded on {1}'.format(
                               plugin.name, self))
         else:
