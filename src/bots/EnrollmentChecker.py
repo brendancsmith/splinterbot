@@ -10,6 +10,7 @@ from sites.myred import MyRedBrowser
 
 # external libraries
 from splinter.exceptions import ElementDoesNotExist
+from selenium.common.exceptions import TimeoutException
 
 #-----------------------------------------------------------------------
 
@@ -45,7 +46,7 @@ class EnrollmentChecker(Bot):
                 self.print_cart(cart)
 
             # handle exceptions
-            except ElementDoesNotExist as e:
+            except (ElementDoesNotExist, TimeoutException) as e:
                 strikes += 1
                 if strikes >= 3:
                     self.handle_exception(e)
