@@ -30,10 +30,10 @@ def main():
 
     strikes = 0  # three webdriver exception's and we'll shut down
     while True:
-        # get the open/closed status of the shopping cart classes
-        cart = check_shopping_cart(myredUsername, myredPassword)
 
+        # get the open/closed status of the shopping cart classes
         try:
+            cart = check_shopping_cart(myredUsername, myredPassword)
             print_cart(cart)
 
         # handle exceptions
