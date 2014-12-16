@@ -1,16 +1,9 @@
-python_library(
-  name = 'bots-lib',
-  dependencies = [
-  ]
-)
-
 python_binary(
-    name = 'WFTransactionGrabber',
-    source = 'WFTransactionGrabber.py',
+    name = 'TransactionDownloader',
+    source = 'TransactionDownloader.py',
     dependencies = [
         '//:splinter',
-        'src:browsers',
-        'src:utils'
+        'src/splinterbot:splinterbot'
     ],
     compatibility = ['>=2.7','<3']
 )
@@ -20,8 +13,7 @@ python_binary(
     source = 'EnrollmentChecker.py',
     dependencies = [
         '//:splinter',
-        'src:browsers',
-        'src:utils',
+        'src/splinterbot:splinterbot',
         'src:gmail'
     ],
     compatibility = ['>=2.7','<3']

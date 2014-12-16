@@ -4,10 +4,12 @@
 import types
 
 # intra-project modules
-import utils
+# N/A
 
 # external libraries
 from splinter.driver.webdriver.firefox import WebDriver as FirefoxWebDriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions
 
 #-----------------------------------------------------------------------
 
@@ -160,8 +162,10 @@ class MyREDBrowser(Browser):
 
         # click the Enrollment Planner menu option
         buttonEnrollmentPlanner = self.driver.find_by_id('menu-item-1-3-1')
-        while not buttonEnrollmentPlanner.visible:
-            utils.wait(1)
+
+        WebDriverWait(self.driver.driver, 10).until(
+            expected_conditions.visibility_of(buttonEnrollmentPlanner._element)
+        )
         buttonEnrollmentPlanner.click()
 
     def get_panel_browser(self):
