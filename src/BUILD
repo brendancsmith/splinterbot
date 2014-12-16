@@ -11,3 +11,8 @@ python_library(
     name = 'utils',
     sources = ['utils.py']
 )
+
+python_library(
+    name = 'gmail',
+    sources = ['gmail.py']
+)
