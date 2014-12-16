@@ -9,7 +9,7 @@ import utils
 from gmail import Gmail
 
 # external libraries
-# N/A
+from splinter.exceptions import ElementDoesNotExist
 
 #-----------------------------------------------------------------------
 
@@ -24,11 +24,29 @@ def main():
     gmailAddr, gmailPassword = ask_login_details('Gmail Login',
                                                  'Email address')
 
+    # Send a non-error email to verify it's working
+    #send_email(gmailAddr, gmailPassword,
+    #           'EnrollmentChecker process has started.')
 
+    strikes = 0  # three webdriver exception's and we'll shut down
     while True:
+        # get the open/closed status of the shopping cart classes
         cart = check_shopping_cart(myredUsername, myredPassword)
 
-        print_cart(cart)
+        try:
+            print_cart(cart)
+
+        # handle exceptions
+        except ElementDoesNotExist as e:
+            strikes += 1
+            if strikes >= 3:
+                print(e)
+                send_email(gmailAddr, gmailPassword, str(e))
+        except Exception as e:
+            print(e)
+            send_email(gmailAddr, gmailPassword, str(e))
+
+        # wait until the next run
         utils.wait(60 * 5)
 
 
