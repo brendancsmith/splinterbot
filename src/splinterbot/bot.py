@@ -6,7 +6,7 @@ import time
 from getpass import getpass
 
 # intra-project modules
-# N/A
+from plugins import PluginReceiver
 
 # external libraries
 # N/A
@@ -14,7 +14,7 @@ from getpass import getpass
 #-----------------------------------------------------------------------
 
 
-class Bot(object):
+class Bot(PluginReceiver, object):
 
     @staticmethod
     def wait(self, sec=5):
