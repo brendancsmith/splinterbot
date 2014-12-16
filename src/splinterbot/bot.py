@@ -18,7 +18,7 @@ from plugins import PluginReceiver
 class Bot(PluginReceiver, object):
 
     @staticmethod
-    def wait(self, sec=5):
+    def wait(sec=5):
         time.sleep(sec)
 
 
