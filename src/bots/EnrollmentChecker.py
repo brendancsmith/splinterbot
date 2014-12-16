@@ -1,12 +1,13 @@
 #------------------------------ imports --------------------------------
 
 # standard modules
-from getpass import getpass
+# N/A
 
 # intra-project modules
-from splinterbot.browsers import MyREDBrowser
-from splinterbot import wait
 from gmail import Gmail
+
+from splinterbot.bot import Bot
+from splinterbot.browsers import MyREDBrowser
 
 # external libraries
 from splinter.exceptions import ElementDoesNotExist
@@ -14,7 +15,7 @@ from splinter.exceptions import ElementDoesNotExist
 #-----------------------------------------------------------------------
 
 
-class EnrollmentChecker(object):
+class EnrollmentChecker(Bot):
 
     def run(self):
         """Checks MyRED to see if classes in the shopping cart for next
@@ -51,16 +52,7 @@ class EnrollmentChecker(object):
                 strikes = 0
 
             # wait until the next run
-            wait(30)
-
-    def ask_login_details(self, loginTitle='Login:',
-                          usernameLabel='Username', passwordLabel='Password'):
-        print(loginTitle)
-        print('=' * len(loginTitle))
-        username = raw_input(usernameLabel + ': ')
-        password = getpass(passwordLabel + ': ')
-
-        return username, password
+            self.wait(5 * 60)
 
     def print_cart(self, cart):
         print('----')

@@ -1,11 +1,11 @@
 #------------------------------ imports --------------------------------
 
 # standard modules
-from getpass import getpass
+# N/A
 
 # intra-project modules
 from splinterbot.browsers import WFBrowser
-from splinterbot import wait
+from splinterbot.bot import Bot
 
 # external libraries
 # N/A
@@ -13,31 +13,30 @@ from splinterbot import wait
 #-----------------------------------------------------------------------
 
 
-def wells_fargo():
-    """Downloads all account exports with the input account info."""
+class WFTransactionGrabber(Bot):
 
-    # get login details from terminal
-    username = raw_input('username: ')
-    password = getpass('password: ')
+    def run(self):
+        """Downloads all account exports with the input account info."""
 
-    # create a driver for Wells Fargo
-    with WFBrowser() as browser:
+        # get login details from terminal
+        username, password = self.ask_login_details('Wells Fargo Login',
+                                                    'username', 'password')
 
-        # go to wellsfargo.com and login
-        browser.nav_home()
-        browser.login(username, password)
+        # create a driver for Wells Fargo
+        with WFBrowser() as browser:
 
-        # go to the download activity page, and download the account exports
-        browser.nav_to_download_page()
-        browser.download_all_accounts()
+            # go to wellsfargo.com and login
+            browser.nav_home()
+            browser.login(username, password)
 
-        # give some extra time in case Firefox makes download alerts
-        wait()
+            # go to the download activity page,
+            # and download the account exports
+            browser.nav_to_download_page()
+            browser.download_all_accounts()
 
-
-def main():
-    wells_fargo()
+            # give some extra time in case Firefox makes download alerts
+            self.wait()
 
 
 if __name__ == "__main__":
-    main()
+    WFTransactionGrabber().run()
