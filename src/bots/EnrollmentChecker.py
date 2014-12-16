@@ -4,7 +4,7 @@
 # N/A
 
 # intra-project modules
-from gmail import Gmail
+from gmail import GmailServer
 
 from splinterbot.bot import Bot
 from splinterbot.browsers import MyREDBrowser
@@ -86,8 +86,8 @@ class EnrollmentChecker(Bot):
                 return cart
 
     def send_email(self, gmailAddr, gmailPassword, msg):
-        with Gmail(gmailAddr, gmailPassword) as server:
-            server.sendmail(gmailAddr, [gmailAddr], msg)
+        with GmailServer(gmailAddr, gmailPassword) as mailServer:
+            mailServer.sendmail(gmailAddr, [gmailAddr], msg)
 
 
 if __name__ == "__main__":

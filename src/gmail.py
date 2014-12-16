@@ -15,10 +15,10 @@ import smtplib
 #       An application-specific password is required.
 
 
-class Gmail(smtplib.SMTP, object):
+class GmailServer(smtplib.SMTP, object):
 
     def __init__(self, username, password):
-        super(Gmail, self).__init__('smtp.gmail.com:587')
+        super(GmailServer, self).__init__('smtp.gmail.com:587')
         self.starttls()
         self.login(username, password)
 
