@@ -4,8 +4,8 @@
 from getpass import getpass
 
 # intra-project modules
-from browsers import WFBrowser
-import utils
+from splinterbot.browsers import WFBrowser
+from splinterbot import utils
 
 # external libraries
 # N/A
