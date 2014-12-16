@@ -4,7 +4,7 @@
 # N/A
 
 # intra-project modules
-from splinterbot.browsers import Browser
+from splinterbot.browser import Browser
 
 # external libraries
 # N/A

@@ -4,7 +4,7 @@
 # N/A
 
 # intra-project modules
-from splinterbot.browsers import Browser, FrameBrowser
+from splinterbot.browser import Browser, FrameBrowser
 
 # external libraries
 from selenium.webdriver.support.ui import WebDriverWait
