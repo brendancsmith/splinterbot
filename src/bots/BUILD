@@ -14,6 +14,7 @@ python_binary(
     source = 'EnrollmentChecker.py',
     dependencies = [
         '//:splinter',
+        '//:docopt',
         'src/splinterbot:splinterbot',
         'src:gmail',
         'src/sites:sites.myred'
