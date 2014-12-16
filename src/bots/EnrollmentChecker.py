@@ -47,6 +47,8 @@ class EnrollmentChecker(object):
             except Exception as e:
                 print(e)
                 self.send_email(gmailAddr, gmailPassword, str(e))
+            else:
+                strikes = 0
 
             # wait until the next run
             utils.wait(60 * 5)
