@@ -5,7 +5,7 @@
 
 # intra-project modules
 from sites.wells_fargo import WFBrowser
-from splinterbot.bot import Bot
+from splinterbot.bot import Bot, LoginManager
 
 # external libraries
 # N/A
@@ -15,19 +15,22 @@ from splinterbot.bot import Bot
 
 class TransactionDownloader(Bot):
 
+    def __init__(self):
+        self.logins = LoginManager()
+
     def run(self):
         """Downloads all account exports with the input account info."""
 
         # get login details from terminal
-        username, password = self.ask_login_details('Wells Fargo Login',
-                                                    'username', 'password')
+        self.logins['wells_fargo'] = LoginManager.ask('Wells Fargo Username',
+                                                      'Wells Fargo Password')
 
         # create a driver for Wells Fargo
         with WFBrowser() as browser:
 
             # go to wellsfargo.com and login
             browser.nav_home()
-            browser.login(username, password)
+            browser.login(*self.logins['wells_fargo'])
 
             # go to the download activity page,
             # and download the account exports
