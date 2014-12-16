@@ -17,7 +17,7 @@ from getpass import getpass
 class Bot(object):
 
     @staticmethod
-    def wait(self, sec=5):
+    def wait(sec=5):
         time.sleep(sec)
 
     def ask_login_details(self, loginTitle='Login:',
