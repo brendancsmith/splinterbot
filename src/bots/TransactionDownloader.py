@@ -1,7 +1,19 @@
+"""
+TransactionDownloader
+
+Usage:
+    TransactionDownloader
+    TransactionDownloader -h | --help
+
+Options:
+    -h --help    Show this sceen.
+
+"""
+
 #------------------------------ imports --------------------------------
 
 # standard modules
-# N/A
+from docopt import docopt
 
 # intra-project modules
 from sites.wells_fargo import WFBrowser
@@ -42,4 +54,5 @@ class TransactionDownloader(Bot):
 
 
 if __name__ == "__main__":
+    args = docopt(__doc__)
     TransactionDownloader().run()

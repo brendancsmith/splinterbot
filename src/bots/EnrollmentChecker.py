@@ -1,7 +1,21 @@
+"""
+EnrollmentChecker
+
+Usage:
+    EnrollmentChecker
+    EnrollmentChecker -h | --help
+
+Options:
+    -h --help    Show this sceen.
+
+"""
+
 #------------------------------ imports --------------------------------
 
 # standard modules
 import traceback
+
+from docopt import docopt
 
 # intra-project modules
 from splinterbot.bot import Bot, LoginManager
@@ -96,5 +110,6 @@ class EnrollmentChecker(Bot):
                 return cart
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
+    args = docopt(__doc__)
     EnrollmentChecker().run()
