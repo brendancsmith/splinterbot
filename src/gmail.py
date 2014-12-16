@@ -27,8 +27,3 @@ class GmailServer(smtplib.SMTP, object):
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.quit()
-
-
-def send_email(gmailAddr, gmailPassword, msg):
-        with GmailServer(gmailAddr, gmailPassword) as mailServer:
-            mailServer.sendmail(gmailAddr, [gmailAddr], msg)

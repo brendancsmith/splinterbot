@@ -4,7 +4,7 @@
 # N/A
 
 # intra-project modules
-import gmail
+from gmail import GmailServer
 
 # external libraries
 # N/A
@@ -43,5 +43,11 @@ class Gmail(AbstractPlugin):
         self.address = address
         self.password = password
 
-    def send_email(self, msg):
-        gmail.send_email(self.address, self.password, msg)
+    def send_email(self, msg, to=None):
+        if to is None:
+            to = self.address
+
+        # avoid colons in the email message
+        with GmailServer(self.address, self.password) as mailServer:
+            print('sending: ' + msg)
+            mailServer.sendmail(self.address, [to], msg)
