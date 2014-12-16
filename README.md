@@ -6,7 +6,9 @@ Splinterbot is a web automation tool written in Python and built on top of [Spli
 Bots
 ----
 
-__WFTransactionGrabber:__ Download account activity .qfx files from Wells Fargo (for YNAB).
+__TransactionDownloader:__ Download account activity .qfx files from Wells Fargo (for YNAB).
+
+__EnrollmentChecker:__ Check's UNL's enrollment website repeatedly and notifies when closed classes become available.
 
 
 Build Instructions

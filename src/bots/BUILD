@@ -1,6 +1,6 @@
 python_binary(
-    name = 'WFTransactionGrabber',
-    source = 'WFTransactionGrabber.py',
+    name = 'TransactionDownloader',
+    source = 'TransactionDownloader.py',
     dependencies = [
         '//:splinter',
         'src/splinterbot:splinterbot'

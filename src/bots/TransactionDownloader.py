@@ -13,7 +13,7 @@ from splinterbot.bot import Bot
 #-----------------------------------------------------------------------
 
 
-class WFTransactionGrabber(Bot):
+class TransactionDownloader(Bot):
 
     def run(self):
         """Downloads all account exports with the input account info."""
@@ -39,4 +39,4 @@ class WFTransactionGrabber(Bot):
 
 
 if __name__ == "__main__":
-    WFTransactionGrabber().run()
+    TransactionDownloader().run()
