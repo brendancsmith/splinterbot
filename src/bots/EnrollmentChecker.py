@@ -32,10 +32,10 @@ class EnrollmentChecker(object):
 
         strikes = 0  # three webdriver exception's and we'll shut down
         while True:
-            # get the open/closed status of the shopping cart classes
-            cart = self.check_shopping_cart(myredUsername, myredPassword)
 
+            # get the open/closed status of the shopping cart classes
             try:
+                cart = self.check_shopping_cart(myredUsername, myredPassword)
                 self.print_cart(cart)
 
             # handle exceptions
