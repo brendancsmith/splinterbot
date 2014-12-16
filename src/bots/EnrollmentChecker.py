@@ -4,8 +4,7 @@
 # N/A
 
 # intra-project modules
-from gmail import GmailServer
-
+from gmail import send_email
 from splinterbot.bot import Bot
 from splinterbot.browsers import MyREDBrowser
 
@@ -44,10 +43,10 @@ class EnrollmentChecker(Bot):
                 strikes += 1
                 if strikes >= 3:
                     print(e)
-                    self.send_email(gmailAddr, gmailPassword, str(e))
+                    send_email(gmailAddr, gmailPassword, str(e))
             except Exception as e:
                 print(e)
-                self.send_email(gmailAddr, gmailPassword, str(e))
+                send_email(gmailAddr, gmailPassword, str(e))
             else:
                 strikes = 0
 
@@ -84,10 +83,6 @@ class EnrollmentChecker(Bot):
                 cart = panelBrowser.parse_shopping_cart()
 
                 return cart
-
-    def send_email(self, gmailAddr, gmailPassword, msg):
-        with GmailServer(gmailAddr, gmailPassword) as mailServer:
-            mailServer.sendmail(gmailAddr, [gmailAddr], msg)
 
 
 if __name__ == "__main__":

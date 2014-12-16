@@ -11,11 +11,11 @@ import smtplib
 
 #-----------------------------------------------------------------------
 
-# NOTE: Login will not work if you are using two-factor authentication.
-#       An application-specific password is required.
-
 
 class GmailServer(smtplib.SMTP, object):
+
+    # NOTE: Login will not work if you are using two-factor authentication.
+    #       An application-specific password is required.
 
     def __init__(self, username, password):
         super(GmailServer, self).__init__('smtp.gmail.com:587')
@@ -27,3 +27,8 @@ class GmailServer(smtplib.SMTP, object):
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.quit()
+
+
+def send_email(gmailAddr, gmailPassword, msg):
+        with GmailServer(gmailAddr, gmailPassword) as mailServer:
+            mailServer.sendmail(gmailAddr, [gmailAddr], msg)
