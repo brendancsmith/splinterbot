@@ -3,8 +3,7 @@ python_binary(
     source = 'WFTransactionGrabber.py',
     dependencies = [
         '//:splinter',
-        'src:splinterbot',
-        'src:gmail'
+        'src/splinterbot:splinterbot'
     ],
     compatibility = ['>=2.7','<3']
 )
@@ -14,7 +13,7 @@ python_binary(
     source = 'EnrollmentChecker.py',
     dependencies = [
         '//:splinter',
-        'src:splinterbot',
+        'src/splinterbot:splinterbot',
         'src:gmail'
     ],
     compatibility = ['>=2.7','<3']

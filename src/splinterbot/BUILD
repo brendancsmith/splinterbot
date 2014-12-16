@@ -1,13 +1,7 @@
 python_library(
-    name = 'browsers',
-    sources = ['browsers.py'],
+    name = 'splinterbot',
+    sources = globs('*.py'),
     dependencies = [
         '//:splinter',
-        ':utils'
     ]
-)
-
-python_library(
-    name = 'utils',
-    sources = ['utils.py']
 )

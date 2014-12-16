@@ -5,7 +5,7 @@ from getpass import getpass
 
 # intra-project modules
 from splinterbot.browsers import MyREDBrowser
-from splinterbot import utils
+from splinterbot import wait
 from gmail import Gmail
 
 # external libraries
@@ -51,7 +51,7 @@ class EnrollmentChecker(object):
                 strikes = 0
 
             # wait until the next run
-            utils.wait(30)
+            wait(30)
 
     def ask_login_details(self, loginTitle='Login:',
                           usernameLabel='Username', passwordLabel='Password'):

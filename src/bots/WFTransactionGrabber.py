@@ -5,7 +5,7 @@ from getpass import getpass
 
 # intra-project modules
 from splinterbot.browsers import WFBrowser
-from splinterbot import utils
+from splinterbot import wait
 
 # external libraries
 # N/A
@@ -32,7 +32,7 @@ def wells_fargo():
         browser.download_all_accounts()
 
         # give some extra time in case Firefox makes download alerts
-        utils.wait()
+        wait()
 
 
 def main():
