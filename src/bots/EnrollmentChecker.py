@@ -5,7 +5,7 @@
 
 # intra-project modules
 from gmail import send_email
-from splinterbot.bot import Bot
+from splinterbot.bot import Bot, LoginManager
 from sites.myred import MyRedBrowser
 
 # external libraries
@@ -16,15 +16,18 @@ from splinter.exceptions import ElementDoesNotExist
 
 class EnrollmentChecker(Bot):
 
+    def __init__(self):
+        self.logins = LoginManager()
+
     def run(self):
         """Checks MyRED to see if classes in the shopping cart for next
         semester are open or closed."""
 
         # get login details from terminal
-        myredUsername, myredPassword = self.ask_login_details('MyRED Login',
-                                                              'NUID')
-        gmailAddr, gmailPassword = self.ask_login_details('Gmail Login',
-                                                          'Email address')
+        self.logins['myred'] = LoginManager.ask('NUID',
+                                                'MyRED Password')
+        self.logins['gmail'] = LoginManager.ask('Gmail Address',
+                                                'Gmail Password')
 
         # Send a non-error email to verify it's working
         #send_email(gmailAddr, gmailPassword,
@@ -35,25 +38,29 @@ class EnrollmentChecker(Bot):
 
             # get the open/closed status of the shopping cart classes
             try:
-                cart = self.check_shopping_cart(myredUsername, myredPassword)
+                cart = self.check_shopping_cart()
                 self.print_cart(cart)
 
             # handle exceptions
             except ElementDoesNotExist as e:
                 strikes += 1
                 if strikes >= 3:
-                    print(e)
-                    send_email(gmailAddr, gmailPassword, str(e))
+                    self.handle_exception(e)
             except Exception as e:
-                print(e)
-                send_email(gmailAddr, gmailPassword, str(e))
+                self.handle_exception(e)
             else:
                 strikes = 0
 
             # wait until the next run
             self.wait(5 * 60)
 
-    def print_cart(self, cart):
+    def handle_exception(self, e):
+        print(e)
+        (address, password) = self.logins['gmail']
+        send_email(address, password, str(e))
+
+    @staticmethod
+    def print_cart(cart):
         print('----')
         printBuffer = ['{0}: {1}'.format(cartClass[0], cartClass[1])
                        for cartClass in cart]
@@ -66,13 +73,13 @@ class EnrollmentChecker(Bot):
                     self.send_email(gmailAddr, gmailPassword,
                                     '{0}: {1}'.format(course[0], course[1]))
 
-    def check_shopping_cart(self, username, password):
+    def check_shopping_cart(self):
         # create a driver for Wells Fargo
         with MyRedBrowser() as browser:
 
             # go to wellsfargo.com and login
             browser.nav_home()
-            browser.login(username, password)
+            browser.login(*self.logins['myred'])
 
             browser.nav_to_enrollment_planner()
 
