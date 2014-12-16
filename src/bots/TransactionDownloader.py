@@ -4,7 +4,7 @@
 # N/A
 
 # intra-project modules
-from splinterbot.browsers import WFBrowser
+from sites.wells_fargo import WFBrowser
 from splinterbot.bot import Bot
 
 # external libraries

@@ -6,7 +6,7 @@
 # intra-project modules
 from gmail import send_email
 from splinterbot.bot import Bot
-from splinterbot.browsers import MyREDBrowser
+from sites.myred import MyRedBrowser
 
 # external libraries
 from splinter.exceptions import ElementDoesNotExist
@@ -68,7 +68,7 @@ class EnrollmentChecker(Bot):
 
     def check_shopping_cart(self, username, password):
         # create a driver for Wells Fargo
-        with MyREDBrowser() as browser:
+        with MyRedBrowser() as browser:
 
             # go to wellsfargo.com and login
             browser.nav_home()
