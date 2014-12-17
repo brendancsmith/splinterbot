@@ -3,10 +3,13 @@ EnrollmentChecker
 
 Usage:
     EnrollmentChecker
-    EnrollmentChecker -h | --help
+    EnrollmentChecker repeat [--interval=<min>] [-g | --gmail]
+    EnrollmentChecker (-h | --help)
 
 Options:
-    -h --help    Show this sceen.
+    -h --help           Show this sceen.
+    --interval=<min>    Minutes before rechecking.
+    -g --gmail          Be notified of openings via Gmail.
 
 """
 
@@ -112,4 +115,5 @@ class EnrollmentChecker(Bot):
 
 if __name__ == '__main__':
     args = docopt(__doc__)
-    EnrollmentChecker().run()
+    print(args)
+    #EnrollmentChecker().run()

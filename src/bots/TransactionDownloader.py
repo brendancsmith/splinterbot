@@ -3,7 +3,7 @@ TransactionDownloader
 
 Usage:
     TransactionDownloader
-    TransactionDownloader -h | --help
+    TransactionDownloader (-h | --help)
 
 Options:
     -h --help    Show this sceen.

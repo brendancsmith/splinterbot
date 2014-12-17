@@ -3,6 +3,7 @@ python_binary(
     source = 'TransactionDownloader.py',
     dependencies = [
         '//:splinter',
+        '//:docopt',
         'src/splinterbot:splinterbot',
         'src/sites:sites.wells_fargo'
     ],
