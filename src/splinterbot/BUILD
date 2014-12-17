@@ -3,5 +3,6 @@ python_library(
     sources = globs('*.py'),
     dependencies = [
         '//:splinter',
+        'src:gmail'
     ]
 )
