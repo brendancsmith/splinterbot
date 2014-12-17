@@ -1,11 +1,11 @@
 #------------------------------ imports --------------------------------
 
 # standard modules
-# N/A
+import traceback
 
 # intra-project modules
-from gmail import send_email
 from splinterbot.bot import Bot, LoginManager
+from splinterbot.plugins import Gmail as GmailPlugin
 from sites.myred import MyRedBrowser
 
 # external libraries
@@ -26,12 +26,15 @@ class EnrollmentChecker(Bot):
         # get login details from terminal
         self.logins['myred'] = LoginManager.ask('NUID',
                                                 'MyRED Password')
+
+        # set up gmail for notifications
         self.logins['gmail'] = LoginManager.ask('Gmail Address',
                                                 'Gmail Password')
+        self.attach_plugin(GmailPlugin(*self.logins['gmail']))
 
         # Send a non-error email to verify it's working
-        #send_email(gmailAddr, gmailPassword,
-        #           'EnrollmentChecker process has started.')
+        #self.plugins['gmail'].send_email(
+        #    'EnrollmentChecker process has started.')
 
         strikes = 0  # three webdriver exception's and we'll shut down
         while True:
@@ -52,12 +55,13 @@ class EnrollmentChecker(Bot):
                 strikes = 0
 
             # wait until the next run
-            self.wait(5 * 60)
+            self.wait(60 * 5)
 
     def handle_exception(self, e):
-        print(e)
-        (address, password) = self.logins['gmail']
-        send_email(address, password, str(e))
+        traceback.print_exc()
+        msg = '{0} - {1}'.format(type(e).__name__, e)
+        self.plugins['gmail'].send_email(msg)
+        exit()
 
     @staticmethod
     def print_cart(cart):
@@ -67,11 +71,11 @@ class EnrollmentChecker(Bot):
         print('\n'.join(printBuffer))
         print('----')
 
-    def notify_of_status(self, cart, gmailAddr, gmailPassword):
+    def notify_of_status(self, cart):
         for course in cart:
-                if course[1] != 'Closed':
-                    self.send_email(gmailAddr, gmailPassword,
-                                    '{0}: {1}'.format(course[0], course[1]))
+            if course[1] != 'Closed':
+                self.plugins['gmail'].send_email('{0}: {1}'.format(course[0],
+                                                                   course[1]))
 
     def check_shopping_cart(self):
         # create a driver for Wells Fargo

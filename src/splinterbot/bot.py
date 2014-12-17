@@ -7,7 +7,7 @@ from collections import namedtuple
 from getpass import getpass
 
 # intra-project modules
-# N/A
+from plugins import PluginReceiver
 
 # external libraries
 # N/A
@@ -15,7 +15,7 @@ from getpass import getpass
 #-----------------------------------------------------------------------
 
 
-class Bot(object):
+class Bot(PluginReceiver, object):
 
     @staticmethod
     def wait(sec=5):
