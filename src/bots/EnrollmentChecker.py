@@ -37,26 +37,39 @@ class EnrollmentChecker(Bot):
         #self.plugins['gmail'].send_email(
         #    'EnrollmentChecker process has started.')
 
+        def check_cart():
+            # get the open/closed status of the shopping cart classes
+            cart = self.get_shopping_cart()
+            self.print_cart(cart)
+
+        def wait():
+            # wait until the next run
+            self.wait(60 * 5)
+
+        strikeExceptions = (ElementDoesNotExist, TimeoutException)
+        self.strikeout_exceptions(check_cart, wait, strikeExceptions)
+
+    def strikeout_exceptions(self, try_block, finally_block, exceptionTypes):
         strikes = 0  # three webdriver exception's and we'll shut down
         while True:
 
             # get the open/closed status of the shopping cart classes
             try:
-                cart = self.check_shopping_cart()
-                self.print_cart(cart)
+                try_block()
 
             # handle exceptions
-            except (ElementDoesNotExist, TimeoutException) as e:
+            except exceptionTypes as e:
                 strikes += 1
                 if strikes >= 3:
                     self.handle_exception(e)
             except Exception as e:
                 self.handle_exception(e)
+
             else:
                 strikes = 0
 
-            # wait until the next run
-            self.wait(60 * 5)
+            finally:
+                finally_block()
 
     def handle_exception(self, e):
         traceback.print_exc()
@@ -78,7 +91,7 @@ class EnrollmentChecker(Bot):
                 self.plugins['gmail'].send_email('{0}: {1}'.format(course[0],
                                                                    course[1]))
 
-    def check_shopping_cart(self):
+    def get_shopping_cart(self):
         # create a driver for Wells Fargo
         with MyRedBrowser() as browser:
 
