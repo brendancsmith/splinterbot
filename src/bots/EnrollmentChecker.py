@@ -18,7 +18,8 @@ Options:
 # standard modules
 import traceback
 
-from docopt import docopt
+
+from docopt import docopt  # TODO: use schema too
 
 # intra-project modules
 from splinterbot.bot import Bot, LoginManager
