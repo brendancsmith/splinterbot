@@ -34,8 +34,9 @@ class EnrollmentChecker(Bot):
         self.attach_plugin(GmailPlugin(*self.logins['gmail']))
 
         # Send a non-error email to verify it's working
-        #self.plugins['gmail'].send_email(
-        #    'EnrollmentChecker process has started.')
+        timestamp = self.plugins['gmail'].timestamp()
+        self.plugins['gmail'].send_email(
+            'EnrollmentChecker Start [{0}]'.format(timestamp))
 
         def check_cart():
             # get the open/closed status of the shopping cart classes

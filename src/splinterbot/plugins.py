@@ -1,7 +1,7 @@
 #------------------------------ imports --------------------------------
 
 # standard modules
-# N/A
+from datetime import datetime
 
 # intra-project modules
 from gmail import GmailServer
@@ -43,11 +43,15 @@ class Gmail(AbstractPlugin):
         self.address = address
         self.password = password
 
+    @staticmethod
+    def timestamp():
+        #TODO: use the datetime formatter
+        return str(datetime.now())
+
     def send_email(self, msg, to=None):
         if to is None:
             to = self.address
 
         # avoid colons in the email message
         with GmailServer(self.address, self.password) as mailServer:
-            print('sending: ' + msg)
             mailServer.sendmail(self.address, [to], msg)
