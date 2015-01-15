@@ -3,7 +3,7 @@ EnrollmentChecker
 
 Usage:
     EnrollmentChecker
-    EnrollmentChecker repeat [--interval=<min>] [-g | --gmail]
+    EnrollmentChecker --repeat=<min> [-g | --gmail]
     EnrollmentChecker (-h | --help)
 
 Options:
@@ -23,7 +23,7 @@ from docopt import docopt  # TODO: use schema too
 
 # intra-project modules
 from splinterbot.bot import Bot, LoginManager
-from splinterbot.plugins import Gmail as GmailPlugin
+from splinterbot.plugins import Gmail as GmailPlugin, EmptyPlugin
 from sites.myred import MyRedBrowser
 
 # external libraries
@@ -34,8 +34,23 @@ from splinter.exceptions import ElementDoesNotExist
 
 class EnrollmentChecker(Bot):
 
-    def __init__(self):
+    def __init__(self, repeatInterval, pluginOptions):
+        self.repeatInterval = repeatInterval
+
         self.logins = LoginManager()
+
+        if pluginOptions['gmail']:
+            # set up gmail for notifications
+            self.logins['gmail'] = LoginManager.ask('Gmail Address',
+                                                    'Gmail Password')
+            self.attach_plugin(GmailPlugin(*self.logins['gmail']))
+
+            # Send a non-error email to verify it's working
+            self.plugins['gmail'].send_email(
+                'EnrollmentChecker process has started.')
+
+        else:
+            self.attach_plugin(EmptyPlugin())
 
     def run(self):
         """Checks MyRED to see if classes in the shopping cart for next
@@ -45,35 +60,38 @@ class EnrollmentChecker(Bot):
         self.logins['myred'] = LoginManager.ask('NUID',
                                                 'MyRED Password')
 
-        # set up gmail for notifications
-        self.logins['gmail'] = LoginManager.ask('Gmail Address',
-                                                'Gmail Password')
-        self.attach_plugin(GmailPlugin(*self.logins['gmail']))
+        def check_cart():
+            # get the open/closed status of the shopping cart classes
+            cart = self.get_shopping_cart()
+            self.print_cart(cart)
 
-        # Send a non-error email to verify it's working
-        #self.plugins['gmail'].send_email(
-        #    'EnrollmentChecker process has started.')
+        def wait():
+            # wait until the next run
+            self.wait(60 * 5)
 
+        self.strikeout_exceptions(check_cart, wait, (ElementDoesNotExist))
+
+    def strikeout_exceptions(self, try_block, finally_block, exceptionTypes):
         strikes = 0  # three webdriver exception's and we'll shut down
         while True:
 
             # get the open/closed status of the shopping cart classes
             try:
-                cart = self.check_shopping_cart()
-                self.print_cart(cart)
+                try_block()
 
             # handle exceptions
-            except ElementDoesNotExist as e:
+            except exceptionTypes as e:
                 strikes += 1
                 if strikes >= 3:
                     self.handle_exception(e)
             except Exception as e:
                 self.handle_exception(e)
+
             else:
                 strikes = 0
 
-            # wait until the next run
-            self.wait(60 * 5)
+            finally:
+                finally_block()
 
     def handle_exception(self, e):
         traceback.print_exc()
@@ -95,7 +113,7 @@ class EnrollmentChecker(Bot):
                 self.plugins['gmail'].send_email('{0}: {1}'.format(course[0],
                                                                    course[1]))
 
-    def check_shopping_cart(self):
+    def get_shopping_cart(self):
         # create a driver for Wells Fargo
         with MyRedBrowser() as browser:
 
@@ -114,7 +132,20 @@ class EnrollmentChecker(Bot):
                 return cart
 
 
-if __name__ == '__main__':
+def main():
     args = docopt(__doc__)
-    print(args)
-    #EnrollmentChecker().run()
+
+    pluginOptions = {
+        'gmail': args['--gmail']
+    }
+
+    repeatInterval = None
+    if(args['--repeat'] is not None):
+        repeatInterval = int(args['--repeat'])
+
+    bot = EnrollmentChecker(repeatInterval, pluginOptions)
+    bot.run()
+
+
+if __name__ == '__main__':
+    main()

@@ -34,6 +34,16 @@ class AbstractPlugin(object):
     name = None
 
 
+class EmptyPlugin(object):
+
+    @staticmethod
+    def _pass(*args, **kwargs):
+        pass
+
+    def __getattr__(self, name):
+        return self._pass
+
+
 class Gmail(AbstractPlugin):
 
     name = 'gmail'
