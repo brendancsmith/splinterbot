@@ -28,21 +28,20 @@ class LoginManager(dict):
 
     @staticmethod
     def ask(userLabel='Username', passLabel='Password'):
-        username = raw_input(userLabel + ': ')
-        password = getpass(passLabel + ': ')
+        username = raw_input(f'{userLabel}: ')
+        password = getpass(f'{passLabel}: ')
         return LoginManager.Login(username, password)
 
     def __setitem__(self, key, value):
         if isinstance(value, LoginManager.Login):
             return super(LoginManager, self).__setitem__(key, value)
 
+        try:
+            assert len(value) == 2
+        except (TypeError, AssertionError):
+            pass
         else:
-            try:
-                assert len(value) == 2
-            except (TypeError, AssertionError):
-                pass
-            else:
-                login = LoginManager.Login(*value)
-                return super(LoginManager, self).__setitem__(key, login)
+            login = LoginManager.Login(*value)
+            return super(LoginManager, self).__setitem__(key, login)
 
         raise TypeError('Not a recognized username/password pair.')

@@ -27,7 +27,7 @@ class MyRedBrowser(Browser):
         buttonLogIn.click()
 
     def nav_home(self):
-        self.driver.visit('http://' + self.domain)
+        self.driver.visit(f'http://{self.domain}')
 
     def nav_to_enrollment_planner(self):
         # open the enrollment navbar element

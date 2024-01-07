@@ -33,8 +33,8 @@ class WFBrowser(Browser):
         """Navigate to the login page if we're not on the domain, and
         the member portal if we are on the domain."""
 
-        if not self.domain in self.driver.url:
-            self.driver.visit('http://' + self.domain)
+        if self.domain not in self.driver.url:
+            self.driver.visit(f'http://{self.domain}')
         else:
             self.driver.visit('https://online.wellsfargo.com/'
                               'das/cgi-bin/session.cgi'
@@ -81,6 +81,4 @@ class WFBrowser(Browser):
         select tag"""
 
         optionEls = selectEl.find_by_tag('option')
-        optionValues = [el.value for el in optionEls]
-
-        return optionValues
+        return [el.value for el in optionEls]
