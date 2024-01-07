@@ -39,7 +39,7 @@ class Browser(object):
     @staticmethod
     def _extend_driver(driver):
         def find_by_text(self, text):
-            return self.find_by_xpath("//*[text()='%s']" % text)
+            return self.find_by_xpath(f"//*[text()='{text}']")
 
         driver.find_by_text = types.MethodType(find_by_text, driver)
 

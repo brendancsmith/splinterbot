@@ -91,9 +91,7 @@ class EnrollmentChecker(Bot):
                 panelBrowser.nav_to_shopping_cart()
                 panelBrowser.choose_semester(1)
 
-                cart = panelBrowser.parse_shopping_cart()
-
-                return cart
+                return panelBrowser.parse_shopping_cart()
 
 
 if __name__ == "__main__":
