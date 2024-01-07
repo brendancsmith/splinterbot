@@ -49,5 +49,5 @@ class Gmail(AbstractPlugin):
 
         # avoid colons in the email message
         with GmailServer(self.address, self.password) as mailServer:
-            print('sending: ' + msg)
+            print(f'sending: {msg}')
             mailServer.sendmail(self.address, [to], msg)
